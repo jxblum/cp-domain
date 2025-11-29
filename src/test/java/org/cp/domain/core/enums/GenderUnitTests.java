@@ -56,21 +56,21 @@ class GenderUnitTests {
   }
 
   @Test
-  public void valueOfReturnsGender() {
+  void valueOfReturnsGender() {
 
     Arrays.stream(Gender.values()).forEach(gender ->
       assertThat(Gender.valueOf(gender.name())).isEqualTo(gender));
   }
 
   @Test
-  public void valueOfAbbreviationReturnsGender() {
+  void valueOfAbbreviationReturnsGender() {
 
     Arrays.stream(Gender.values()).forEach(gender ->
       assertThat(Gender.valueOfAbbreviation(gender.getAbbreviation())).isEqualTo(gender));
   }
 
   @Test
-  public void valueOfAbbreviationUsingNameReturnsNull() {
+  void valueOfAbbreviationUsingNameReturnsNull() {
 
     assertThat(Gender.valueOfAbbreviation("Female")).isNull();
     assertThat(Gender.valueOfAbbreviation("Girl")).isNull();
@@ -79,7 +79,7 @@ class GenderUnitTests {
   }
 
   @Test
-  public void valueOfInvalidAbbreviationReturnsNull() {
+  void valueOfInvalidAbbreviationReturnsNull() {
 
     assertThat(Gender.valueOfAbbreviation("B")).isNull(); // Boy
     assertThat(Gender.valueOfAbbreviation("G")).isNull(); // Guy / Girl
@@ -87,19 +87,19 @@ class GenderUnitTests {
   }
 
   @Test
-  public void valueOfNullAbbreviationIsNullSafeAndReturnsNull() {
+  void valueOfNullAbbreviationIsNullSafeAndReturnsNull() {
     assertThat(Gender.valueOfAbbreviation(null)).isNull();
   }
 
   @Test
-  public void valueOfNameReturnsGender() {
+  void valueOfNameReturnsGender() {
 
     Arrays.stream(Gender.values()).forEach(gender ->
       assertThat(Gender.valueOfName(gender.getName())).isEqualTo(gender));
   }
 
   @Test
-  public void valueOfNameUsingAbbreviationReturnsNull() {
+  void valueOfNameUsingAbbreviationReturnsNull() {
 
     assertThat(Gender.valueOfName("B")).isNull();
     assertThat(Gender.valueOfName("F")).isNull();
@@ -109,7 +109,7 @@ class GenderUnitTests {
   }
 
   @Test
-  public void valueOfInvalidNameReturnsNull() {
+  void valueOfInvalidNameReturnsNull() {
 
     assertThat(Gender.valueOfName("Boy")).isNull();
     assertThat(Gender.valueOfName("Girl")).isNull();
@@ -120,7 +120,7 @@ class GenderUnitTests {
   }
 
   @Test
-  public void valueOfNullNameIsNullSafeReturnsNull() {
+  void valueOfNullNameIsNullSafeReturnsNull() {
     assertThat(Gender.valueOfName(null)).isNull();
   }
 }
