@@ -70,8 +70,8 @@ import org.cp.elements.util.ComparatorResultBuilder;
  */
 @FluentApi
 @JsonIgnoreProperties({
-  "alive", "age", "adult", "born", "currentVersion", "female", "firstName", "lastName", "male", "middleName",
-  "teenager", "nonBinary", "new", "notNew"
+  "alive", "age", "adult", "born", "child", "currentVersion", "female", "firstName", "lastName", "male", "middleName",
+  "nonBinary", "new", "notNew", "teenager"
 })
 public class Person extends AbstractVersionedObject<Person, UUID> implements Cloneable, Comparable<Person>,
     Identifiable<Long>, JsonSerializable, Nameable<Name>, Renderable, Serializable, Visitable {
