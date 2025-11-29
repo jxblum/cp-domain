@@ -266,7 +266,6 @@ public class Person extends AbstractVersionedObject<Person, UUID> implements Clo
    * @see java.time.LocalDateTime
    */
   public Person(@NotNull Name name, @Nullable LocalDateTime birthDate) {
-
     this.name = ObjectUtils.requireObject(name, "Name is required");
     this.birthDate = birthDate;
   }
@@ -316,10 +315,7 @@ public class Person extends AbstractVersionedObject<Person, UUID> implements Clo
    * @see #getGender()
    */
   public boolean isFemale() {
-
-    return getGender()
-      .filter(Gender.FEMALE::equals)
-      .isPresent();
+    return getGender().filter(Gender::isFemale).isPresent();
   }
 
   /**
@@ -330,10 +326,7 @@ public class Person extends AbstractVersionedObject<Person, UUID> implements Clo
    * @see #getGender()
    */
   public boolean isMale() {
-
-    return getGender()
-      .filter(Gender.MALE::equals)
-      .isPresent();
+    return getGender().filter(Gender::isMale).isPresent();
   }
 
   /**
@@ -344,10 +337,7 @@ public class Person extends AbstractVersionedObject<Person, UUID> implements Clo
    * @see #getGender()
    */
   public boolean isNonBinary() {
-
-    return getGender()
-      .filter(Gender.NON_BINARY::equals)
-      .isPresent();
+    return getGender().filter(Gender::isNonBinary).isPresent();
   }
 
   /**
