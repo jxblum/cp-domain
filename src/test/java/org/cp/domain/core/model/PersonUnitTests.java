@@ -135,7 +135,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void fromPerson() {
+   void fromPerson() {
 
     UUID version = UUID.randomUUID();
 
@@ -162,7 +162,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void fromNullPersonThrowsIllegalArgumentException() {
+   void fromNullPersonThrowsIllegalArgumentException() {
 
     assertThatIllegalArgumentException()
       .isThrownBy(() -> Person.from(null))
@@ -171,7 +171,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void newPersonWithName() {
+   void newPersonWithName() {
 
     Name name = Name.of("Jon", "J", "Bloom");
 
@@ -189,7 +189,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void newPersonWithNameAndDateOfBirth() {
+   void newPersonWithNameAndDateOfBirth() {
 
     LocalDateTime birthDate = getBirthDateForAge(16);
 
@@ -209,7 +209,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void newPersonWithStringName() {
+   void newPersonWithStringName() {
 
     Person person = Person.newPerson("Jon Bloom");
 
@@ -224,7 +224,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void newPersonWithStringNameAndDateOfBirth() {
+   void newPersonWithStringNameAndDateOfBirth() {
 
     LocalDateTime birthDate = getBirthDateForAge(21);
 
@@ -241,7 +241,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void newPersonWithFirstNameAndLastName() {
+   void newPersonWithFirstNameAndLastName() {
 
     Person person = Person.newPerson("Jon", "Bloom");
 
@@ -256,7 +256,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void newPersonWithFirstNameLastNameAndDateOfBirth() {
+   void newPersonWithFirstNameLastNameAndDateOfBirth() {
 
     LocalDateTime birthDate = getBirthDateForAge(42);
 
@@ -273,7 +273,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void constructPersonWithName() {
+   void constructPersonWithName() {
 
     Name name = Name.of("Jon", "J", "Bloom");
 
@@ -291,7 +291,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void constructPersonWithNameAndDateOfBirth() {
+   void constructPersonWithNameAndDateOfBirth() {
 
     LocalDateTime birthDate = getBirthDateForAge(100);
 
@@ -311,7 +311,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void constructPersonWithNoName() {
+   void constructPersonWithNoName() {
 
     assertThatIllegalArgumentException()
       .isThrownBy(() -> new Person(null))
@@ -320,16 +320,16 @@ public class PersonUnitTests {
   }
 
   @Test
-  void isAdultReturnsTrue() {
+  void isAdult() {
 
-    Person person = Person.newPerson("Some", "Person").age(5);
+    Person adult = Person.newPerson("Some", "Person").age(5);
 
-    assertThat(person).isNotNull();
+    assertThat(adult).isNotNull();
 
     IntStream.range(18, 100).forEach(age -> {
-      assertThat(person.age(age)).isSameAs(person);
-      assertThat(person.getAge().orElse(-1)).isEqualTo(age);
-      assertThat(person.isAdult()).isTrue();
+      assertThat(adult.age(age)).isSameAs(adult);
+      assertThat(adult.getAge().orElse(-1)).isEqualTo(age);
+      assertThat(adult.isAdult()).isTrue();
     });
   }
 
@@ -348,7 +348,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void isAliveWithNoDateOfDeathReturnsTrue() {
+   void isAliveWithNoDateOfDeathReturnsTrue() {
 
     Person person = Person.newPerson("Some", "Person");
 
@@ -358,7 +358,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void isAliveWithDateOfDeathReturnsFalse() {
+   void isAliveWithDateOfDeathReturnsFalse() {
 
     Person person = Person.newPerson("Some", "Person");
 
@@ -371,7 +371,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void isBornWithBirthDateReturnsTrue() {
+   void isBornWithBirthDateReturnsTrue() {
 
     Person person = Person.newPerson("Some", "Person", getBirthDateForAge(21));
 
@@ -381,7 +381,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void isBornWithNoBirthDateReturnsFalse() {
+   void isBornWithNoBirthDateReturnsFalse() {
 
     Person person = Person.newPerson("Some", "Person");
 
@@ -391,14 +391,42 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void isFemaleAsFemaleReturnsTrue() {
+  void isChild() {
+
+    Person child = Person.newPerson("Some", "Person").age(21);
+
+    assertThat(child).isNotNull();
+
+    IntStream.range(1, Person.TEENAGE).forEach(age -> {
+      assertThat(child.age(age)).isSameAs(child);
+      assertThat(child.getAge().orElse(-1)).isEqualTo(age);
+      assertThat(child.isChild()).isTrue();
+    });
+  }
+
+  @Test
+  void isNotChild() {
+
+    Person person = Person.newPerson("Some", "Person").age(21);
+
+    assertThat(person).isNotNull();
+
+    IntStream.range(Person.TEENAGE, 100).forEach(age -> {
+      assertThat(person.age(age)).isSameAs(person);
+      assertThat(person.getAge().orElse(-1)).isEqualTo(age);
+      assertThat(person.isChild()).isFalse();
+    });
+  }
+
+  @Test
+  void isFemaleAsFemaleReturnsTrue() {
 
     assertFemale(Person.newPerson("Sarah", "Bloom").as(Gender.FEMALE));
     assertFemale(Person.newPerson("Ellie", "Bloom").asFemale());
   }
 
   @Test
-  public void isFemaleAsNonFemaleReturnsFalse() {
+  void isFemaleAsNonFemaleReturnsFalse() {
 
     Arrays.asList(Gender.MALE, Gender.NON_BINARY).forEach(gender -> {
 
@@ -410,14 +438,14 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void isMaleAsMaleReturnsTrue() {
+  void isMaleAsMaleReturnsTrue() {
 
     assertMale(Person.newPerson("Jon", "Bloom").as(Gender.MALE));
     assertMale(Person.newPerson("John", "Blum").asMale());
   }
 
   @Test
-  public void isMaleAsNonMaleReturnsFalse() {
+  void isMaleAsNonMaleReturnsFalse() {
 
     Arrays.asList(Gender.FEMALE, Gender.NON_BINARY).forEach(gender -> {
 
@@ -429,14 +457,14 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void isNonBinaryAsNonBinaryReturnsTrue() {
+  void isNonBinaryAsNonBinaryReturnsTrue() {
 
     assertNonBinary(Person.newPerson("Some", "Person").as(Gender.NON_BINARY));
     assertNonBinary(Person.newPerson("Another", "Person").asNonBinary());
   }
 
   @Test
-  public void isNonBinaryAsNotNonBinaryReturnsFalse() {
+  void isNonBinaryAsNotNonBinaryReturnsFalse() {
 
     Arrays.asList(Gender.FEMALE, Gender.MALE).forEach(gender -> {
 
@@ -448,26 +476,26 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void isGenderWhenNullIsNullSafeReturnsFalse() {
+  void isGenderWhenNullIsNullSafeReturnsFalse() {
     assertNoGender(Person.newPerson("Some", "Person"));
   }
 
   @Test
-  void isTeenagerReturnsTrue() {
+  void isTeenager() {
 
-    Person person = Person.newPerson("Some", "Person").age(5);
+    Person teenager = Person.newPerson("Some", "Person").age(5);
 
-    assertThat(person).isNotNull();
+    assertThat(teenager).isNotNull();
 
     IntStream.range(13, 17).forEach(age -> {
-      assertThat(person.age(age)).isSameAs(person);
-      assertThat(person.getAge().orElse(-1)).isEqualTo(age);
-      assertThat(person.isTeenager()).isTrue();
+      assertThat(teenager.age(age)).isSameAs(teenager);
+      assertThat(teenager.getAge().orElse(-1)).isEqualTo(age);
+      assertThat(teenager.isTeenager()).isTrue();
     });
   }
 
   @Test
-  void isNotTeenage() {
+  void isNotTeenager() {
 
     Person person = Person.newPerson("Some", "Person").age(21);
 
@@ -487,7 +515,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void ageIsBasedOnBirthDate() {
+  void ageIsBasedOnBirthDate() {
 
     Person person = Person.newPerson("Some", "Person", getBirthDateForAge(21));
 
@@ -498,7 +526,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void ageIsCorrectWhenDateOfDeathIsSet() {
+  void ageIsCorrectWhenDateOfDeathIsSet() {
 
     Person person = Person.newPerson("Some", "Person", getBirthDateForAge(100));
 
@@ -517,7 +545,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void ageIsUnknownWhenBirthDateIsUnset() {
+  void ageIsUnknownWhenBirthDateIsUnset() {
 
     Person person = Person.newPerson("Some", "Person");
 
@@ -528,7 +556,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void ageIsUnknownWhenBirthDateIsUnsetAndDateOfDeathIsSet() {
+  void ageIsUnknownWhenBirthDateIsUnsetAndDateOfDeathIsSet() {
 
     Person person = Person.newPerson("Some", "Person");
 
@@ -542,7 +570,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void ageIsZeroWhenBirthDateIsInFuture() {
+  void ageIsZeroWhenBirthDateIsInFuture() {
 
     Person person = spy(Person.newPerson("Unborn", "Child"));
 
@@ -561,7 +589,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void setAndGetBirthDate() {
+  void setAndGetBirthDate() {
 
     LocalDateTime birthDate = LocalDateTime.of(2012, Month.JANUARY, 17, 9, 30);
 
@@ -584,7 +612,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void setBirthDateToFutureDate() {
+  void setBirthDateToFutureDate() {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Person.BIRTH_DATE_PATTERN);
 
@@ -598,7 +626,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void setAndGetDateOfDeath() {
+  void setAndGetDateOfDeath() {
 
     LocalDateTime dateOfDeath = LocalDateTime.of(2011, Month.MAY, 31, 9, 30, 15);
 
@@ -622,7 +650,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void setDateOfDeathAfterBirthDate() {
+  void setDateOfDeathAfterBirthDate() {
 
     LocalDateTime birthDate =
       LocalDateTime.of(1945, Month.NOVEMBER, 13, 11, 30, 15);
@@ -643,7 +671,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void setDateOfDeathBeforeBirthDate() {
+  void setDateOfDeathBeforeBirthDate() {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Person.DATE_OF_DEATH_PATTERN);
 
@@ -660,7 +688,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void setDateOfDeathToFutureDate() {
+  void setDateOfDeathToFutureDate() {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Person.DATE_OF_DEATH_PATTERN);
 
@@ -674,7 +702,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void setAndGetGender() {
+  void setAndGetGender() {
 
     Person person = Person.newPerson("Some", "Person");
 
@@ -694,7 +722,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void setGenderToNullIsNullSafe() {
+  void setGenderToNullIsNullSafe() {
 
     Person person = Person.newPerson("Some", "Person").as(Gender.MALE);
 
@@ -706,7 +734,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void setAndGetId() {
+  void setAndGetId() {
 
     Person person = Person.newPerson("Some", "Person");
 
@@ -729,7 +757,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void setAndGetVersion() {
+  void setAndGetVersion() {
 
     Person person = Person.newPerson("Some", "Person");
 
@@ -746,7 +774,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void ageSetsBirthDate() {
+  void ageSetsBirthDate() {
 
     Person person = Person.newPerson("Jon", "Bloom").age(16);
 
@@ -759,7 +787,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void ageSetToNegativeValueThrowsIllegalArgumentException() {
+  void ageSetToNegativeValueThrowsIllegalArgumentException() {
 
     assertThatIllegalArgumentException()
       .isThrownBy(() -> Person.newPerson("Jon", "Bloom").age(-1))
@@ -768,7 +796,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void ageSetToZeroSetsBirthDate() {
+  void ageSetToZeroSetsBirthDate() {
 
     Person person = Person.newPerson("Jon", "Bloom").age(0);
 
@@ -781,7 +809,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void asGenderCallsSetGender() {
+  void asGenderCallsSetGender() {
 
     Person person = Person.newPerson("Some", "Person");
 
@@ -797,7 +825,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void asFemaleSetsGender() {
+  void asFemaleSetsGender() {
 
     Person person = Person.newPerson("Ellie", "Bloom");
 
@@ -807,7 +835,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void asMaleSetsGender() {
+  void asMaleSetsGender() {
 
     Person person = Person.newPerson("Jon", "Bloom");
 
@@ -817,7 +845,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void asNonBinarySetsGender() {
+  void asNonBinarySetsGender() {
 
     Person person = Person.newPerson("Some", "Person");
 
@@ -827,7 +855,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void bornSetsBirthDateAndAge() {
+  void bornSetsBirthDateAndAge() {
 
     LocalDateTime birthDate = getBirthDateForAge(42);
 
@@ -850,7 +878,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void changeLastName() {
+  void changeLastName() {
 
     Person person = Person.newPerson("Jon", "Bloom");
 
@@ -863,7 +891,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void changeLastNameToNullThrowsIllegalArgumentException() {
+  void changeLastNameToNullThrowsIllegalArgumentException() {
 
     Person person = Person.newPerson("Jon", "Bloom");
 
@@ -878,7 +906,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void changeName() {
+  void changeName() {
 
     Person person = Person.newPerson("Don S Juan");
 
@@ -891,7 +919,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void changeNameToNullThrowsIllegalArgumentException() {
+  void changeNameToNullThrowsIllegalArgumentException() {
 
     Person person = Person.newPerson("Jon", "Bloom");
 
@@ -906,7 +934,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void diedSetsDateOfDeath() {
+  void diedSetsDateOfDeath() {
 
     LocalDateTime dateOfDeath = LocalDateTime.now().minusYears(5);
 
@@ -926,7 +954,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void initializesPersonWithFluentApiCorrectly() {
+  void initializesPersonWithFluentApiCorrectly() {
 
     LocalDateTime birthDate = getBirthDateForAge(48);
 
@@ -954,7 +982,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void acceptIsCorrect() {
+  void acceptIsCorrect() {
 
     Visitor mockVisitor = mock(Visitor.class);
 
@@ -967,7 +995,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void cloneCopiesPerson() throws CloneNotSupportedException {
+  void cloneCopiesPerson() throws CloneNotSupportedException {
 
     LocalDateTime birthDate = getBirthDateForAge(49);
 
@@ -996,7 +1024,7 @@ public class PersonUnitTests {
 
   @Test
   @SuppressWarnings("all")
-  public void comparedToSelf() {
+  void comparedToSelf() {
 
     Person jonBloom = Person.newPerson(Name.of("Jon", "J", "Bloom"),
       LocalDateTime.of(2000, Month.MAY, 5, 0, 0));
@@ -1006,7 +1034,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void compareToEqualPeople() {
+  void compareToEqualPeople() {
 
     Person jonBloomOne = Person.newPerson(Name.of("Jon", "J", "Bloom"),
       LocalDateTime.of(2018, Month.FEBRUARY, 9, 23, 0));
@@ -1020,7 +1048,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void compareToIsGreaterThan() {
+  void compareToIsGreaterThan() {
 
     Person jonBloom = Person.newPerson(Name.of("Jon", "J", "Bloom"),
       LocalDateTime.of(1974, Month.MAY, 27, 12, 0));
@@ -1034,7 +1062,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void compareToIsLessThan() {
+  void compareToIsLessThan() {
 
     Person jonBloom = Person.newPerson(Name.of("Jon", "J", "Bloom"),
       LocalDateTime.of(1974, Month.MAY, 27, 12, 0));
@@ -1048,7 +1076,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void equalsWithEqualPeopleReturnsTrue() {
+  void equalsWithEqualPeopleReturnsTrue() {
 
     Person jonBloomOne = Person.newPerson(Name.of("Jon", "J", "Bloom"),
       LocalDateTime.of(2000, Month.DECEMBER, 4, 12, 30));
@@ -1062,7 +1090,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void equalsWithEffectivelyEqualPeopleReturnsTrue() {
+  void equalsWithEffectivelyEqualPeopleReturnsTrue() {
 
     LocalDateTime birthDate = getBirthDateForAge(18);
 
@@ -1077,7 +1105,7 @@ public class PersonUnitTests {
 
   @Test
   @SuppressWarnings("all")
-  public void equalsWithIdenticalPeopleReturnsTrue() {
+  void equalsWithIdenticalPeopleReturnsTrue() {
 
     Person jonBloom = Person.newPerson(Name.of("Jon", "J", "Bloom"),
       LocalDateTime.of(1998, Month.MAY, 15, 8, 0));
@@ -1087,7 +1115,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void equalsWithNearlyEqualPeopleReturnsFalse() {
+  void equalsWithNearlyEqualPeopleReturnsFalse() {
 
     Person jonBloomOne = Person.newPerson(Name.of("Jon", "J", "Bloom"),
       LocalDateTime.of(1995, Month.SEPTEMBER, 5, 11, 30));
@@ -1102,7 +1130,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void equalsWithSimilarPeopleReturnsFalse() {
+  void equalsWithSimilarPeopleReturnsFalse() {
 
     Person johnBlum = Person.newPerson(Name.of("John", "J", "Blum"),
       LocalDateTime.of(1974, Month.MAY, 27, 12, 0));
@@ -1118,18 +1146,18 @@ public class PersonUnitTests {
 
   @Test
   @SuppressWarnings("all")
-  public void equalsNullIsNullSafeReturnsFalse() {
+  void equalsNullIsNullSafeReturnsFalse() {
     assertThat(Person.newPerson("Jon", "Bloom", getBirthDateForAge(16)).equals(null)).isFalse();
   }
 
   @Test
   @SuppressWarnings("all")
-  public void equalsObjectReturnsFalse() {
+  void equalsObjectReturnsFalse() {
     assertThat(Person.newPerson("Jon", "Bloom").equals("Jon Bloom")).isFalse();
   }
 
   @Test
-  public void hashCodeForPersonIsNotZero() {
+  void hashCodeForPersonIsNotZero() {
 
     Person person =
       Person.newPerson(Name.of("Jon", "J", "Bloom"), getBirthDateForAge(43));
@@ -1138,7 +1166,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void hashCodeForIdenticalPeopleIsSame() {
+  void hashCodeForIdenticalPeopleIsSame() {
 
     Person person = Person.newPerson(Name.of("Jon", "J", "Bloom"),
       LocalDateTime.of(2018, Month.FEBRUARY, 11, 10, 0));
@@ -1148,7 +1176,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void hashCodeForEqualPeopleIsSame() {
+  void hashCodeForEqualPeopleIsSame() {
 
     Person jonBloomOne = Person.newPerson(Name.of("Jon", "J", "Bloom"),
       LocalDateTime.of(2018, Month.FEBRUARY, 11, 10, 30));
@@ -1162,7 +1190,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void hashCodeForDifferentPeopleIsNotEqual() {
+  void hashCodeForDifferentPeopleIsNotEqual() {
 
     Person jonBloom = Person.newPerson(Name.of("Jon", "J", "Bloom"),
       LocalDateTime.of(1974, Month.MAY, 27, 12, 0));
@@ -1177,7 +1205,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void toStringWithNameIsCorrect() {
+  void toStringWithNameIsCorrect() {
 
     Person person = Person.newPerson("Jon", "Bloom");
 
@@ -1196,7 +1224,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void toStringWithNameAndDateOfBirthIsCorrect() {
+  void toStringWithNameAndDateOfBirthIsCorrect() {
 
     Person person = Person.newPerson(Name.of("Jon", "J", "Bloom"))
       .born(LocalDateTime.of(1999, Month.NOVEMBER, 11, 6, 30, 45));
@@ -1213,7 +1241,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void toStringWithNameGenderDateOfBirthAndDateOfDeathIsCorrect() {
+  void toStringWithNameGenderDateOfBirthAndDateOfDeathIsCorrect() {
 
     Person person = Person.newPerson(Name.of("Some", "Random", "Person"))
       .asMale()
@@ -1229,7 +1257,7 @@ public class PersonUnitTests {
   }
 
   @Test
-  public void personIsSerializable() throws IOException, ClassNotFoundException {
+  void personIsSerializable() throws IOException, ClassNotFoundException {
 
     LocalDateTime birthDate = getBirthDateForAge(42);
     LocalDateTime dateOfDeath = birthDate.plusYears(27);

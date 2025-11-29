@@ -271,13 +271,18 @@ public class Person extends AbstractVersionedObject<Person, UUID> implements Clo
   }
 
   /**
-   * Determines whether this {@link Person} is an adult.
+   * Determines whether this {@link Person} is an {@literal adult}.
    *
-   * @return a boolean value indicating whether this {@link Person} is an adult.
+   * @return a boolean value indicating whether this {@link Person} is an {@literal adult}.
+   * @see #isTeenager()
+   * @see #isChild()
    * @see #getAge()
    */
   public boolean isAdult() {
-    return getAge().filter(age -> age >= ADULT_AGE) .isPresent();
+
+    return getAge()
+      .filter(age -> age >= ADULT_AGE)
+      .isPresent();
   }
 
   /**
@@ -304,6 +309,21 @@ public class Person extends AbstractVersionedObject<Person, UUID> implements Clo
 
     return getBirthDate()
       .filter(birthDate -> birthDate.isBefore(LocalDateTime.now()))
+      .isPresent();
+  }
+
+  /**
+   * Determines whether this {@link Person} is a {@literal child}.
+   *
+   * @return a boolean value indicating whether this {@link Person} is a {@literal child}.
+   * @see #isTeenager()
+   * @see #isAdult()
+   * @see #getAge()
+   */
+  public boolean isChild() {
+
+    return getAge()
+      .filter(age -> age < TEENAGE)
       .isPresent();
   }
 
