@@ -437,7 +437,7 @@ public class Person extends AbstractVersionedObject<Person, UUID> implements Clo
 
         DateTimeFormatter birthDateFormatter = DateTimeFormatter.ofPattern(BIRTH_DATE_PATTERN);
 
-        return String.format("Birth date [%1$s] must be on or before today [%2$s]",
+        return "Birth date [%1$s] must be on or before today [%2$s]".formatted(
           birthDateFormatter.format(birthDate.toLocalDate()), birthDateFormatter.format(now.toLocalDate()));
       });
     }
@@ -474,17 +474,15 @@ public class Person extends AbstractVersionedObject<Person, UUID> implements Clo
 
     if (dateOfDeath != null) {
 
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_OF_DEATH_PATTERN);
-
       getBirthDate().ifPresent(birthDate -> Assert.isFalse(dateOfDeath.isBefore(birthDate), () ->
-          String.format("Date of death [%1$s] cannot be before the person's date of birth [%2$s]",
-            formatter.format(dateOfDeath.toLocalDate()), formatter.format(birthDate.toLocalDate()))));
+          "Date of death [%1$s] cannot be before the person's date of birth [%2$s]"
+            .formatted(formatDeathDate(dateOfDeath), formatDeathDate(birthDate))));
 
       LocalDateTime now = LocalDateTime.now();
 
       Assert.isFalse(dateOfDeath.isAfter(now), () ->
-        String.format("A person's date of death [%s] cannot be known in the future",
-          formatter.format(dateOfDeath.toLocalDate())));
+        "A person's date of death [%s] cannot be known in the future"
+          .formatted(formatDeathDate(dateOfDeath)));
     }
 
     this.dateOfDeath = dateOfDeath;
@@ -834,22 +832,38 @@ public class Person extends AbstractVersionedObject<Person, UUID> implements Clo
 
     String resolvedMiddleName = getMiddleName().orElse(Constants.UNKNOWN);
 
-    return String.format(PERSON_TO_STRING, getClass().getName(),
-      getFirstName(), resolvedMiddleName, getLastName(), birthDateAsString(), dateOfDeathAsString(),
-        getGender().map(Gender::toString).orElse(Constants.UNKNOWN));
+    return PERSON_TO_STRING.formatted(getClass().getName(), getFirstName(), resolvedMiddleName, getLastName(),
+      birthDateAsString(), dateOfDeathAsString(), genderAsString());
   }
 
-  private @NotNull String birthDateAsString() {
+  private String birthDateAsString() {
 
     return getBirthDate()
       .map(birthDate -> DateTimeFormatter.ofPattern(BIRTH_DATE_TIME_PATTERN).format(birthDate))
       .orElse(Constants.UNKNOWN);
   }
 
-  private @NotNull String dateOfDeathAsString() {
+  private String dateOfDeathAsString() {
 
     return getDateOfDeath()
       .map(dateOfDeath -> DateTimeFormatter.ofPattern(DATE_TIME_OF_DEATH_PATTERN).format(dateOfDeath))
       .orElse(Constants.UNKNOWN);
+  }
+
+  private String formatBirthdate(LocalDateTime birthDate) {
+    return formatDateTime(birthDate, BIRTH_DATE_PATTERN);
+  }
+
+  private String formatDeathDate(LocalDateTime deathDate) {
+    return formatDateTime(deathDate, DATE_OF_DEATH_PATTERN);
+  }
+
+  private String formatDateTime(LocalDateTime dateTime, String dateTimePattern) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateTimePattern);
+    return formatter.format(dateTime);
+  }
+
+  private String genderAsString() {
+    return getGender().map(Gender::toString).orElse(Constants.UNKNOWN);
   }
 }
