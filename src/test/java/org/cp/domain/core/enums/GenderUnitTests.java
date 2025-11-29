@@ -29,7 +29,15 @@ import org.junit.jupiter.api.Test;
  * @see org.cp.domain.core.enums.Gender
  * @since 0.1.0
  */
-public class GenderUnitTests {
+class GenderUnitTests {
+
+  @Test
+  void isFemale() {
+
+    assertThat(Gender.FEMALE.isFemale()).isTrue();
+    assertThat(Gender.MALE.isFemale()).isFalse();
+    assertThat(Gender.NON_BINARY.isFemale()).isFalse();
+  }
 
   @Test
   public void valueOfReturnsGender() {

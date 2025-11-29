@@ -97,6 +97,15 @@ public enum Gender implements Nameable<String> {
   }
 
   /**
+   * Determines if this {@link Gender} is {@link #FEMALE}.
+   *
+   * @return a boolean indicating whether this {@link Gender} is {@link #FEMALE}.
+   */
+  public boolean isFemale() {
+    return this.equals(FEMALE);
+  }
+
+  /**
    * Get the {@link String abbreviation} for {@literal this} {@link Gender}.
    *
    * @return the {@link String abbreviation} of {@literal this} {@link Gender}.
