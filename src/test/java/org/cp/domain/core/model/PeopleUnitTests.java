@@ -45,7 +45,7 @@ import org.cp.elements.util.stream.StreamUtils;
  * @since 0.1.0
  */
 @SuppressWarnings("unused")
-public class PeopleUnitTests {
+class PeopleUnitTests {
 
   private final Person jonDoe = Person.newPerson(Name.of("Jon", "R", "Doe"))
     .born(birthDate(1974, Month.MAY, 27))
