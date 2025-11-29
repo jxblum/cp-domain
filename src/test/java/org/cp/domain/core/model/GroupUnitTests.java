@@ -58,7 +58,7 @@ import org.cp.elements.util.CollectionUtils;
  * @see org.cp.domain.core.model.Person
  * @since 0.1.0
  */
-public class GroupUnitTests {
+class GroupUnitTests {
 
   private Group<Person> mockGroup(Person... people) {
     return mockGroup("MockGroup", people);
@@ -77,7 +77,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void acceptsVisitor() {
+  void acceptsVisitor() {
 
     Visitor mockVisitor = mock(Visitor.class);
 
@@ -99,7 +99,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void countsAll() {
+  void countsAll() {
 
     Predicate<Person> mockPredicate = mock(Predicate.class);
 
@@ -122,7 +122,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void countsNone() {
+  void countsNone() {
 
     Person mockPersonOne = mock(Person.class);
     Person mockPersonTwo = mock(Person.class);
@@ -139,7 +139,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void countsOne() {
+  void countsOne() {
 
     Predicate<Person> mockPredicate = mock(Predicate.class);
 
@@ -163,7 +163,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void countWithNullPredicate() {
+  void countWithNullPredicate() {
 
     Group<?> mockGroup = mockGroup();
 
@@ -180,7 +180,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void containsPersonReturnsTrue() {
+  void containsPersonReturnsTrue() {
 
     Person mockPerson = mock(Person.class);
 
@@ -199,7 +199,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void containsPersonReturnsFalse() {
+  void containsPersonReturnsFalse() {
 
     Person mockPerson = mock(Person.class);
 
@@ -217,7 +217,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void containsNullIsNullSafeReturnsFalse() {
+  void containsNullIsNullSafeReturnsFalse() {
 
     Group<?> mockGroup = mockGroup();
 
@@ -231,7 +231,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void differenceOfGroups() {
+  void differenceOfGroups() {
 
     Person mockPersonOne = mock(Person.class);
     Person mockPersonTwo = mock(Person.class);
@@ -266,7 +266,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void differenceOfEmptyGroup() {
+  void differenceOfEmptyGroup() {
 
     Person mockPerson = mock(Person.class);
 
@@ -292,7 +292,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void differenceOfMatchingGroups() {
+  void differenceOfMatchingGroups() {
 
     Person mockPerson = mock(Person.class);
 
@@ -324,7 +324,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void differenceOfNullGroup() {
+  void differenceOfNullGroup() {
 
     Group<?> mockGroup = mockGroup();
 
@@ -341,7 +341,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void findByFindsAllPeopleMatchingPredicate() {
+  void findByFindsAllPeopleMatchingPredicate() {
 
     Person jonDoe = Person.newPerson("Jon", "Doe");
     Person janeDoe = Person.newPerson("Jane", "Doe");
@@ -362,7 +362,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void findByFindsNoPeopleMatchingPredicate() {
+  void findByFindsNoPeopleMatchingPredicate() {
 
     Predicate<Person> predicate = spy(new PersonGreaterThanAgePredicate(49));
 
@@ -388,7 +388,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void findByFindsSinglePersonMatchingPredicate() {
+  void findByFindsSinglePersonMatchingPredicate() {
 
     Person jonDoe = Person.newPerson("Jon", "Doe").asMale();
     Person janeDoe = Person.newPerson("Jane", "Doe").asFemale();
@@ -408,7 +408,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void findByWithNullPredicate() {
+  void findByWithNullPredicate() {
 
     Group<?> mockGroup = mockGroup();
 
@@ -425,7 +425,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void findOneFindsFirstPersonMatchingPredicate() {
+  void findOneFindsFirstPersonMatchingPredicate() {
 
     Person jonDoe = Person.newPerson("Jon", "Doe");
     Person janeDoe = Person.newPerson("Jane", "Doe");
@@ -445,7 +445,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void findOneFindsNoPersonMatchingPredicate() {
+  void findOneFindsNoPersonMatchingPredicate() {
 
     Predicate<Person> predicate = spy(new PersonGreaterThanAgePredicate(20));
 
@@ -469,7 +469,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void findOneFindsOnlyPersonMatchingPredicate() {
+  void findOneFindsOnlyPersonMatchingPredicate() {
 
     Person jonDoe = Person.newPerson("Jon", "Doe").asMale();
 
@@ -488,7 +488,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void findOneWithNullPredicate() {
+  void findOneWithNullPredicate() {
 
     Group<Person> mockGroup = mockGroup();
 
@@ -504,7 +504,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void generatesUniqueIds() {
+  void generatesUniqueIds() {
 
     assertThat(Stream.generate(Group::generateId)
       .limit(100)
@@ -514,7 +514,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void intersectionOfGroups() {
+  void intersectionOfGroups() {
 
     Person mockPersonOne = mock(Person.class);
     Person mockPersonTwo = mock(Person.class);
@@ -543,7 +543,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void intersectionOfEmptyGroup() {
+  void intersectionOfEmptyGroup() {
 
     Person mockPerson = mock(Person.class);
 
@@ -582,7 +582,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void intersectionOfMatchingGroups() {
+  void intersectionOfMatchingGroups() {
 
     Person mockPerson = mock(Person.class);
 
@@ -609,7 +609,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void intersectionWithNullGroup() {
+  void intersectionWithNullGroup() {
 
     Group<?> mockGroup = mockGroup();
 
@@ -622,7 +622,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void isEmptyWhenSizeIsGreaterThanZeroReturnsFalse() {
+  void isEmptyWhenSizeIsGreaterThanZeroReturnsFalse() {
 
     Group<?> mockGroup = mockGroup();
 
@@ -640,7 +640,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void isEmptyWhenSizeIsLessThanOneReturnsTrue() {
+  void isEmptyWhenSizeIsLessThanOneReturnsTrue() {
 
     Group<?> mockGroup = mockGroup();
 
@@ -661,7 +661,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void leaveWithExistingPersonReturnsTrue() {
+  void leaveWithExistingPersonReturnsTrue() {
 
     Person jonDoe = Person.newPerson("Jon", "Doe");
     Person janeDoe = Person.newPerson("Jane", "Doe");
@@ -684,7 +684,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void leaveWithNonExistingPersonReturnsFalse() {
+  void leaveWithNonExistingPersonReturnsFalse() {
 
     Person jonDoe = Person.newPerson("Jon", "Doe");
     Person janeDoe = Person.newPerson("Jane", "Doe");
@@ -707,7 +707,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void leaveWithNullPersonIsNullSafeReturnsFalse() {
+  void leaveWithNullPersonIsNullSafeReturnsFalse() {
 
     Person jonDoe = Person.newPerson("Jon", "Doe");
 
@@ -729,7 +729,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void leaveEmptyGroupReturnsFalse() {
+  void leaveEmptyGroupReturnsFalse() {
 
     Person jackHandy = Person.newPerson("Jack", "Handy");
 
@@ -747,7 +747,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void leaveWithPredicateRemovesEveryPersonFromGroupAndReturnsTrue() {
+  void leaveWithPredicateRemovesEveryPersonFromGroupAndReturnsTrue() {
 
     Person jonDoe = Person.newPerson("Jon", "Doe");
     Person janeDoe = Person.newPerson("Jane", "Doe");
@@ -771,7 +771,7 @@ public class GroupUnitTests {
 
   @Test
   @SuppressWarnings("unchecked")
-  public void leaveWithPredicateRemovesMultiplePeopleFromGroupReturnsTrue() {
+  void leaveWithPredicateRemovesMultiplePeopleFromGroupReturnsTrue() {
 
     Person jonDoe = Person.newPerson("Jon", "Doe");
     Person janeDoe = Person.newPerson("Jane", "Doe");
@@ -794,7 +794,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void sizeOfGroupWithTwoPeopleReturnsTwo() {
+  void sizeOfGroupWithTwoPeopleReturnsTwo() {
 
     Person jonDoe = Person.newPerson("Jon", "Doe");
     Person janeDoe = Person.newPerson("Jane", "Doe");
@@ -809,7 +809,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void sizeOfGroupWithOnePersonReturnsOne() {
+  void sizeOfGroupWithOnePersonReturnsOne() {
 
     Person jonDoe = Person.newPerson("Jon", "Doe");
 
@@ -823,7 +823,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void sizeOfEmptyGroupReturnsZero() {
+  void sizeOfEmptyGroupReturnsZero() {
 
     Group<?> mockGroup = mockGroup();
 
@@ -835,7 +835,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void streamGroupOfPeople() {
+  void streamGroupOfPeople() {
 
     Person mockPersonOne = mock(Person.class);
     Person mockPersonTwo = mock(Person.class);
@@ -855,7 +855,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void streamGroupOfPerson() {
+  void streamGroupOfPerson() {
 
     Person mockPerson = mock(Person.class);
 
@@ -874,7 +874,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void streamEmptyGroup() {
+  void streamEmptyGroup() {
 
     Group<Person> mockGroup = mockGroup();
 
@@ -889,7 +889,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void unionIsCorrect() {
+  void unionIsCorrect() {
 
     Person mockPersonOne = mock(Person.class);
     Person mockPersonTwo = mock(Person.class);
@@ -915,7 +915,7 @@ public class GroupUnitTests {
   }
 
   @Test
-  public void unionIsNullSafe() {
+  void unionIsNullSafe() {
 
     Person mockPerson = mock(Person.class);
 
