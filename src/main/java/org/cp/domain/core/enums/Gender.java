@@ -115,6 +115,15 @@ public enum Gender implements Nameable<String> {
   }
 
   /**
+   * Determines if this {@link Gender} is {@link #NON_BINARY}.
+   *
+   * @return a boolean indicating whether this {@link Gender} is {@link #NON_BINARY}.
+   */
+  public boolean isNonBinary() {
+    return this.equals(NON_BINARY);
+  }
+
+  /**
    * Get the {@link String abbreviation} for {@literal this} {@link Gender}.
    *
    * @return the {@link String abbreviation} of {@literal this} {@link Gender}.

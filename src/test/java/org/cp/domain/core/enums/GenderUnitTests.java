@@ -48,6 +48,14 @@ class GenderUnitTests {
   }
 
   @Test
+  void isNonBinary() {
+
+    assertThat(Gender.FEMALE.isNonBinary()).isFalse();
+    assertThat(Gender.MALE.isNonBinary()).isFalse();
+    assertThat(Gender.NON_BINARY.isNonBinary()).isTrue();
+  }
+
+  @Test
   public void valueOfReturnsGender() {
 
     Arrays.stream(Gender.values()).forEach(gender ->
